@@ -23,6 +23,9 @@
     NSString *path = [documentsDirectory stringByAppendingPathComponent:@"lichvannien.sqlite"];
     
     Db *db = [[Db alloc] initWithName:path];
+    if (![db existDb]) {
+        [db createDb];
+    }
     [db openDb];
     
     return YES;

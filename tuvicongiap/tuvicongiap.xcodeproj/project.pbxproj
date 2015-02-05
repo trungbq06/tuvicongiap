@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8143482A1A81EC4B00706F05 /* Calendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 814348291A81EC4B00706F05 /* Calendar.m */; };
+		8143482F1A8217C700706F05 /* GlobalTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8143482E1A8217C700706F05 /* GlobalTextField.m */; };
+		814348331A83145B00706F05 /* TBDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 814348321A83145B00706F05 /* TBDatePicker.m */; };
 		81A8FA511A80CA5200BA7EB5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A8FA501A80CA5200BA7EB5 /* main.m */; };
 		81A8FA541A80CA5200BA7EB5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A8FA531A80CA5200BA7EB5 /* AppDelegate.m */; };
 		81A8FA5A1A80CA5200BA7EB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A8FA581A80CA5200BA7EB5 /* Main.storyboard */; };
@@ -34,6 +37,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		814348281A81EC4B00706F05 /* Calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calendar.h; sourceTree = "<group>"; };
+		814348291A81EC4B00706F05 /* Calendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calendar.m; sourceTree = "<group>"; };
+		8143482D1A8217C700706F05 /* GlobalTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalTextField.h; sourceTree = "<group>"; };
+		8143482E1A8217C700706F05 /* GlobalTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalTextField.m; sourceTree = "<group>"; };
+		814348311A83145B00706F05 /* TBDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBDatePicker.h; sourceTree = "<group>"; };
+		814348321A83145B00706F05 /* TBDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBDatePicker.m; sourceTree = "<group>"; };
 		81A8FA4B1A80CA5200BA7EB5 /* tuvicongiap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tuvicongiap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A8FA4F1A80CA5200BA7EB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81A8FA501A80CA5200BA7EB5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -96,6 +105,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		814348271A81EC2F00706F05 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				814348281A81EC4B00706F05 /* Calendar.h */,
+				814348291A81EC4B00706F05 /* Calendar.m */,
+				8143482D1A8217C700706F05 /* GlobalTextField.h */,
+				8143482E1A8217C700706F05 /* GlobalTextField.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		814348301A83145B00706F05 /* TBDatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				814348311A83145B00706F05 /* TBDatePicker.h */,
+				814348321A83145B00706F05 /* TBDatePicker.m */,
+			);
+			path = TBDatePicker;
+			sourceTree = "<group>";
+		};
 		81A8FA421A80CA5200BA7EB5 = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +205,8 @@
 		81A8FA761A80CC2C00BA7EB5 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				814348301A83145B00706F05 /* TBDatePicker */,
+				814348271A81EC2F00706F05 /* Common */,
 				81A8FAA91A80CF1200BA7EB5 /* FMDB */,
 				81A8FAA41A80CEEC00BA7EB5 /* Logger */,
 				81A8FA7C1A80CE3000BA7EB5 /* Database */,
@@ -332,10 +363,13 @@
 				81A8FA9D1A80CE3000BA7EB5 /* FMResultSet+Additions.m in Sources */,
 				81A8FAA81A80CEEC00BA7EB5 /* LoggerClient.m in Sources */,
 				81A8FA9C1A80CE3000BA7EB5 /* DebugLog.m in Sources */,
+				814348331A83145B00706F05 /* TBDatePicker.m in Sources */,
+				8143482A1A81EC4B00706F05 /* Calendar.m in Sources */,
 				81A8FA991A80CE3000BA7EB5 /* DbCache.m in Sources */,
 				81A8FAB41A80CF1200BA7EB5 /* FMResultSet.m in Sources */,
 				81A8FA9E1A80CE3000BA7EB5 /* FuncionesGlobales.m in Sources */,
 				81A8FA9F1A80CE3000BA7EB5 /* NSDate+DateFunctions.m in Sources */,
+				8143482F1A8217C700706F05 /* GlobalTextField.m in Sources */,
 				81A8FAA21A80CE3000BA7EB5 /* SqlGenerator.m in Sources */,
 				81A8FAA01A80CE3000BA7EB5 /* NSString+Clean.m in Sources */,
 				81A8FA9B1A80CE3000BA7EB5 /* DbPool.m in Sources */,
@@ -490,6 +524,7 @@
 				81A8FA701A80CA5200BA7EB5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
