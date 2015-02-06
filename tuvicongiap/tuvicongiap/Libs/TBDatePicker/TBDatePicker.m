@@ -15,7 +15,6 @@
     NSInteger nYears;
 }
 
-@property (nonatomic, strong) UIPickerView *picker;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDate *minDate;
 @property (nonatomic, strong) NSDate *maxDate;
@@ -77,11 +76,13 @@
 }
 
 - (void)commonInit {
+    self.clipsToBounds = YES;
     [self setBackgroundColor:[UIColor whiteColor]];
     
     self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
-    self.picker = [[UIPickerView alloc] initWithFrame:self.bounds];
+    self.picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, -28.5, self.frame.size.width, self.frame.size.height)];
+    self.picker.backgroundColor = [UIColor clearColor];
     self.picker.dataSource = self;
     self.picker.delegate = self;
     
@@ -96,25 +97,15 @@
 {
     self.date = date;
     
-    NSDateComponents *components = [self.calendar
-                                    components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
-                                    fromDate:self.earliestPresentedDate];
+    NSDateComponents *components = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:self.date];
     
-    NSDate *fromDate = [self.calendar dateFromComponents:components];
-    
-    
-    components = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute)
-                                  fromDate:fromDate
-                                    toDate:date
-                                   options:0];
-    
-    NSInteger hour = [components hour] + 24 * (INT16_MAX / 120);
-    NSInteger minute = [components minute] + 60 * (INT16_MAX / 120);
+    NSInteger month = [components month];
+    NSInteger year = [components year];
     NSInteger day = [components day];
     
-    [self.picker selectRow:day inComponent:0 animated:YES];
-    [self.picker selectRow:hour inComponent:1 animated:YES];
-    [self.picker selectRow:minute inComponent:2 animated:YES];
+    [self.picker selectRow:day - 1 inComponent:0 animated:YES];
+    [self.picker selectRow:month - 1 inComponent:1 animated:YES];
+    [self.picker selectRow:year - 1900 - 1 inComponent:2 animated:YES];
     
 }
 
@@ -157,7 +148,7 @@
     startHourIndex = todaysComponents.hour;
     startMinuteIndex = todaysComponents.minute;
     
-    self.date = [NSDate dateWithTimeInterval:startDayIndex*24*60*60+startHourIndex*60*60+startMinuteIndex*60 sinceDate:self.earliestPresentedDate];
+    self.date = dateToPresent;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -169,7 +160,7 @@
 {
     if (component == 0)
     {
-        return nDays;
+        return 31;
     }
     else if (component == 1)
     {
@@ -187,16 +178,16 @@
 {
     switch (component) {
         case 0:
-            return 60;
+            return 35;
             break;
         case 1:
-            return 60;
+            return 35;
             break;
         case 2:
-            return 60;
+            return 35;
             break;
         case 3:
-            return 100;
+            return 80;
             break;
         default:
             return 0;
@@ -206,33 +197,32 @@
 
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 35;
+    return 20;
 }
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
     UILabel *lblDate = [[UILabel alloc] init];
-    [lblDate setFont:[UIFont systemFontOfSize:16.0]];
+    [lblDate setFont:[UIFont systemFontOfSize:14.0]];
     [lblDate setTextColor:[UIColor blackColor]];
     [lblDate setBackgroundColor:[UIColor clearColor]];
+    lblDate.textAlignment = NSTextAlignmentCenter;
     
     if (component == 0) // Day
     {
-        [lblDate setText:[NSString stringWithFormat:@"%ld", (long)row]];
+        [lblDate setText:[NSString stringWithFormat:@"%ld", (long)row + 1]];
     }
     else if (component == 1) // Month
     {
-        [lblDate setText:[NSString stringWithFormat:@"%ld", (long)row]];
+        [lblDate setText:[NSString stringWithFormat:@"%ld", (long)row + 1]];
     }
     else if (component == 2) // Year
     {
-        int max = (int)[self.calendar maximumRangeOfUnit:NSCalendarUnitMinute].length;
-        [lblDate setText:[NSString stringWithFormat:@"%02ld",(row % max)]];
-        lblDate.textAlignment = NSTextAlignmentLeft;
+        [lblDate setText:[NSString stringWithFormat:@"%ld", (long)row + 1900]];
     } else {
         if (row == 0) {
             lblDate.text = @"Dương Lịch";
         } else {
-            lblDate.text = @"Âm Lịch";
+            lblDate.text = @"Âm Lịch   ";
         }
     }
     
@@ -241,22 +231,24 @@
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSInteger daysFromStart;
     NSDate *chosenDate;
     
-    daysFromStart = [pickerView selectedRowInComponent:0];
-    chosenDate = [NSDate dateWithTimeInterval:daysFromStart*24*60*60 sinceDate:self.earliestPresentedDate];
+    NSInteger day = [pickerView selectedRowInComponent:0];
+    NSInteger month = [pickerView selectedRowInComponent:1];
+    NSInteger year = [pickerView selectedRowInComponent:2];
+    self.cType = (int) [pickerView selectedRowInComponent:3];
     
-    NSInteger hour = [pickerView selectedRowInComponent:1];
-    NSInteger minute = [pickerView selectedRowInComponent:2];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    day = day + 1;
+    month = month + 1;
+    year = year + 1900;
+    NSString *_sDate = [NSString stringWithFormat:@"%02ld-%02ld-%02ld", (long)year, (long)month, (long)day];
     
-    // Build date out of the components we got
-    NSDateComponents *components = [self.calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:chosenDate];
+    chosenDate = [dateFormatter dateFromString:_sDate];
+    NSLog(@"Selected Date %@", chosenDate);
     
-    components.hour = hour % 24;
-    components.minute = minute % 60;
-    
-    self.date = [self.calendar dateFromComponents:components];
+    self.date = chosenDate;
     
     if ([self.date compare:self.minDate] == NSOrderedAscending) {
         [self showDateOnPicker:self.minDate];

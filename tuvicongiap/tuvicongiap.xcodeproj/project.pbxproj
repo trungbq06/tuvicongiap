@@ -10,6 +10,8 @@
 		8143482A1A81EC4B00706F05 /* Calendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 814348291A81EC4B00706F05 /* Calendar.m */; };
 		8143482F1A8217C700706F05 /* GlobalTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8143482E1A8217C700706F05 /* GlobalTextField.m */; };
 		814348331A83145B00706F05 /* TBDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 814348321A83145B00706F05 /* TBDatePicker.m */; };
+		814348381A84BDAB00706F05 /* Tuvi.m in Sources */ = {isa = PBXBuildFile; fileRef = 814348371A84BDAB00706F05 /* Tuvi.m */; };
+		8143483C1A84C7BC00706F05 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8143483B1A84C7BC00706F05 /* DetailViewController.m */; };
 		81A8FA511A80CA5200BA7EB5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A8FA501A80CA5200BA7EB5 /* main.m */; };
 		81A8FA541A80CA5200BA7EB5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A8FA531A80CA5200BA7EB5 /* AppDelegate.m */; };
 		81A8FA5A1A80CA5200BA7EB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A8FA581A80CA5200BA7EB5 /* Main.storyboard */; };
@@ -43,6 +45,10 @@
 		8143482E1A8217C700706F05 /* GlobalTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalTextField.m; sourceTree = "<group>"; };
 		814348311A83145B00706F05 /* TBDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBDatePicker.h; sourceTree = "<group>"; };
 		814348321A83145B00706F05 /* TBDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBDatePicker.m; sourceTree = "<group>"; };
+		814348361A84BDAB00706F05 /* Tuvi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tuvi.h; sourceTree = "<group>"; };
+		814348371A84BDAB00706F05 /* Tuvi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tuvi.m; sourceTree = "<group>"; };
+		8143483A1A84C7BC00706F05 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		8143483B1A84C7BC00706F05 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		81A8FA4B1A80CA5200BA7EB5 /* tuvicongiap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tuvicongiap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A8FA4F1A80CA5200BA7EB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81A8FA501A80CA5200BA7EB5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -125,6 +131,24 @@
 			path = TBDatePicker;
 			sourceTree = "<group>";
 		};
+		814348351A84BD7D00706F05 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				814348361A84BDAB00706F05 /* Tuvi.h */,
+				814348371A84BDAB00706F05 /* Tuvi.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		814348391A84C7AE00706F05 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				8143483A1A84C7BC00706F05 /* DetailViewController.h */,
+				8143483B1A84C7BC00706F05 /* DetailViewController.m */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		81A8FA421A80CA5200BA7EB5 = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +213,7 @@
 		81A8FA741A80CC2C00BA7EB5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				814348351A84BD7D00706F05 /* Models */,
 				81A8FA751A80CC2C00BA7EB5 /* ViewControllers */,
 			);
 			path = Classes;
@@ -198,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				81A8FA781A80CC8A00BA7EB5 /* Main */,
+				814348391A84C7AE00706F05 /* Detail */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -365,7 +391,9 @@
 				81A8FA9C1A80CE3000BA7EB5 /* DebugLog.m in Sources */,
 				814348331A83145B00706F05 /* TBDatePicker.m in Sources */,
 				8143482A1A81EC4B00706F05 /* Calendar.m in Sources */,
+				814348381A84BDAB00706F05 /* Tuvi.m in Sources */,
 				81A8FA991A80CE3000BA7EB5 /* DbCache.m in Sources */,
+				8143483C1A84C7BC00706F05 /* DetailViewController.m in Sources */,
 				81A8FAB41A80CF1200BA7EB5 /* FMResultSet.m in Sources */,
 				81A8FA9E1A80CE3000BA7EB5 /* FuncionesGlobales.m in Sources */,
 				81A8FA9F1A80CE3000BA7EB5 /* NSDate+DateFunctions.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "Db.h"
+#import "DbPool.h"
 
 @interface AppDelegate ()
 
@@ -18,17 +19,46 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Init database
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"lichvannien.sqlite"];
+    [self copyDatabaseIfNeeded];
     
-    Db *db = [[Db alloc] initWithName:path];
-    if (![db existDb]) {
-        [db createDb];
-    }
-    [db openDb];
+    NSString *path = [self getDBPath];
+    
+    [[DbPool sharedInstance] addConn:@"default" path:path];
+    [[Db currentDb] openDb];
     
     return YES;
+}
+
+- (void) copyDatabaseIfNeeded {
+    
+    //Using NSFileManager we can perform many file system operations.
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    
+    NSString *dbPath = [self getDBPath];
+    BOOL success = [fileManager fileExistsAtPath:dbPath];
+    
+    if(!success) {
+        
+        NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"lichvannien.sqlite"];
+        success = [fileManager copyItemAtPath:defaultDBPath toPath:dbPath error:&error];
+        
+        if (!success)
+            NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
+    }
+}
+
+- (NSString *) getDBPath
+{
+    //Search for standard documents using NSSearchPathForDirectoriesInDomains
+    //First Param = Searching the documents directory
+    //Second Param = Searching the Users directory and not the System
+    //Expand any tildes and identify home directories.
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
+    NSString *documentsDir = [paths objectAtIndex:0];
+    //NSLog(@"dbpath : %@",documentsDir);
+    return [documentsDir stringByAppendingPathComponent:@"lichvannien.sqlite"];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

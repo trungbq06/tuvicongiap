@@ -42,20 +42,28 @@
     
     [self.view addSubview:_hourTableView];
     
-    _datePicker = [[TBDatePicker alloc] initWithFrame:CGRectMake(0, 20, 320, 264) maxDate:[NSDate dateWithTimeIntervalSinceNow:7*24*60*60] minDate:[NSDate date] showValidDatesOnly:NO];
+    _hourTableView.hidden = TRUE;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    NSString *date = @"1900-01-01";
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDate *minDate = [dateFormatter dateFromString:date];
+    
+    CGRect dateFrame = _txtBirthday.frame;
+    _datePicker = [[TBDatePicker alloc] initWithFrame:dateFrame maxDate:[NSDate date] minDate:minDate showValidDatesOnly:NO];
     
     _datePicker.delegate = self;
     [self.view addSubview:_datePicker];
-}
-
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
     
-    CGRect dateFrame = _txtBirthday.frame;
-    _datePicker.frame = dateFrame;
     _datePicker.layer.borderWidth = 1.0;
     _datePicker.layer.borderColor = [[UIColor grayColor] CGColor];
+    _datePicker.layer.cornerRadius = 3.0;
     
     CGRect hourFrame = _txtBirthhour.frame;
     _hourTableView.frame = CGRectMake(hourFrame.origin.x, hourFrame.origin.y + hourFrame.size.height, hourFrame.size.width, 120);
@@ -69,11 +77,47 @@
 }
 
 - (IBAction)btnConfirmClick:(id)sender {
+    _cType = _datePicker.cType;
+    _sDate = _datePicker.date;
+    
     NSString *username = _txtUsername.text;
     NSString *birthDay = _txtBirthday.text;
     NSString *birthHour = _txtBirthhour.text;
     
-    
+    if (!_sDate) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Ngày không hợp lệ !" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    } else {
+        int day, month, year;
+        if (_cType == 0) {
+            // Convert to lunar date
+            NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:_sDate];
+            day = (int) [components day];
+            month = (int) [components month];
+            year = (int) [components year];
+            
+            NSArray *convertDate = [Calendar convertSolar2Lunar:day mm:month yy:year timeZone:7.0];
+            if ([convertDate count] > 0) {
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                
+                NSString *date = [NSString stringWithFormat:@"%@-%@-%@", convertDate[2], convertDate[1], convertDate[0]];
+                _sDate = [dateFormatter dateFromString:date];
+            }
+        }
+        
+        // Start loading data from database
+        Db *db = [Db currentDb];
+        
+        Tuvi *tuvi = [[Tuvi alloc] init];
+        NSArray * data = [db loadAsDictArray:[NSString stringWithFormat:@"SELECT * FROM tbl_tuvi WHERE duonglich LIKE '%%%d%%'", year]];
+        
+    }
+}
+
+#pragma mark - TBDATE PICKER DELEGATE
+- (void)dateChanged:(id)sender
+{
 }
 
 #pragma mark - TABLE VIEW DATASOURCE

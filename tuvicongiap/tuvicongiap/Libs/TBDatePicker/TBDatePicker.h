@@ -18,8 +18,10 @@
 
 @interface TBDatePicker : UIControl
 
+@property (nonatomic, strong) UIPickerView *picker;
 @property (nonatomic, strong) id<TBDatePickerDelegate> delegate;
 @property (nonatomic, strong) NSDate *date;
+@property (assign)            int cType;
 
 - (id)initWithFrame:(CGRect)frame maxDate:(NSDate *)maxDate minDate:(NSDate *)minDate showValidDatesOnly:(BOOL)showValidDatesOnly;
 @end
