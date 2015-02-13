@@ -16,7 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    _content.text = _tuvi.tuviTrondoi;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,4 +35,7 @@
 }
 */
 
+- (IBAction)backClick:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

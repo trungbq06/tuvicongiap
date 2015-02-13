@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "DetailViewController.h"
 #import "Calendar.h"
 
 @interface MainViewController ()
@@ -17,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _tuviData = [[NSMutableArray alloc] initWithCapacity:0];
     
     _hourData = [NSMutableArray arrayWithArray:@[@"Giờ Tý (23h-1h)",
                                                  @"Giờ Sửu (1h-3h)",
@@ -109,9 +112,30 @@
         // Start loading data from database
         Db *db = [Db currentDb];
         
-        Tuvi *tuvi = [[Tuvi alloc] init];
         NSArray * data = [db loadAsDictArray:[NSString stringWithFormat:@"SELECT * FROM tbl_tuvi WHERE duonglich LIKE '%%%d%%'", year]];
-        
+        if ([data count] > 0) {
+            [_tuviData removeAllObjects];
+            for (NSDictionary *_tuvi in data) {
+                Tuvi *tuvi = [[Tuvi alloc] init];
+                
+                tuvi.lunar = [_tuvi objectForKey:@"amlich"];
+                tuvi.solar = [_tuvi objectForKey:@"duonglich"];
+                tuvi.tuvi2015 = [_tuvi objectForKey:@"tuvi_2015"];
+                tuvi.ageType = [_tuvi objectForKey:@"loai_tuoi"];
+                tuvi.tuviTrondoi = [_tuvi objectForKey:@"tuvi_trondoi"];
+                tuvi.sex = [_tuvi objectForKey:@"gioitinh"];
+                
+                DetailViewController *detailController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
+                detailController.tuvi = tuvi;
+                detailController.name = username;
+                detailController.birthDay = birthDay;
+                detailController.birthHour = birthHour;
+                detailController.sex = @"Nam";
+                
+                [self.navigationController pushViewController:detailController animated:YES];
+                break;
+            }
+        }
     }
 }
 

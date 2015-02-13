@@ -17,6 +17,7 @@
 @property (nonatomic, retain) TBDatePicker *datePicker;
 @property (nonatomic, retain) UITableView *hourTableView;
 @property (nonatomic, retain) NSMutableArray *hourData;
+@property (nonatomic, retain) NSMutableArray *tuviData;
 
 @property (nonatomic, retain) NSDate         *sDate;
 @property (nonatomic, assign) int            cType;
